@@ -17,4 +17,14 @@ export const todoService = {
     delete: (id) => api.delete(`/todos/${id}`)
 };
 
+export const employeService ={
+    login: async (email, password) => {
+        const response = await api.post('/auth/local', {
+            identifier: email,
+            password: password
+        });
+        return response.data;
+    }
+}
+
 export default api;
