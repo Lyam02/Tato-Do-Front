@@ -2,7 +2,8 @@ import './Navbar.css'
 import {Link} from 'react-router-dom';
 import logo from "../../assets/logo.png";
 
-function Navbar() {
+function Navbar({lists}) {
+
   return (
     <div className="sidebar p-4 d-flex flex-column ">
 
@@ -38,29 +39,21 @@ function Navbar() {
       <div className="mb-4">
         <h6 className="text-uppercase text-white-50 small mb-3">Listes</h6>
         
-        <div className="list-item">
+        {lists.map(list => (
+          <Link key={list.documentId} to={`/lists/${list.documentId}`} className="text-decoration-none">
+          <div className="list-item">
           <div className="d-flex align-items-center">
-            <span className="list-dot bg-dark"></span>
-            <span>Travail</span>
+            <span className="list-dot" style={{backgroundColor: list.color}}></span>
+            <span>{list.name}</span>
           </div>
-          <i className="bi bi-people"></i>
+          {list.isPublic ? (
+            <i className="bi bi-people"></i>
+          ) : (
+            <i className="bi bi-lock"></i>
+          )}
         </div>
-        
-        <div className="list-item">
-          <div className="d-flex align-items-center">
-            <span className="list-dot bg-success"></span>
-            <span>Perso</span>
-          </div>
-          <i className="bi bi-lock"></i>
-        </div>
-        
-        <div className="list-item">
-          <div className="d-flex align-items-center">
-            <span className="list-dot bg-primary"></span>
-            <span>Étude</span>
-          </div>
-          <i className="bi bi-people"></i>
-        </div>
+        </Link>
+        ))}
         
         <button className="btn btn-link text-white text-decoration-none mt-2">
           <i className="bi bi-plus-circle me-2"></i> Nouvelle liste

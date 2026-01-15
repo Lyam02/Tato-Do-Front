@@ -28,9 +28,7 @@ function Home(){
 
     const handleDelete = async (id) => {
         try{
-            const response = await todoService.delete(id);
-            console.log("Réponse Strapi:", response);
-            // console.log("Status:", response.status);
+            await todoService.delete(id);
 
             setTodos(todos.filter(todo => todo.documentId !== id));
         }catch(error){

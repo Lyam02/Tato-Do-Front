@@ -1,12 +1,25 @@
 import Navbar from "./Navbar"
+import { useState, useEffect} from 'react';
+import { listService } from "../../services/api";
 
 function Layout({children}){
+
+    const [lists, setLists] = useState([]);
+    
+    useEffect(() => {
+        const fetchLists = async () => {
+        const response = await listService.getAll();
+        setLists(response.data.data);
+    };
+    fetchLists();
+    }, []);
+
     return (
         <div className="container-fluid p-0">
             <div className="row g-0 min-vh-100">
 
                 <div className="col-auto">
-                    <Navbar />
+                    <Navbar lists={lists} />
                 </div>
 
                 <div className="col p-4 ms-5 mt-5">
