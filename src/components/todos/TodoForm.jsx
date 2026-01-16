@@ -8,7 +8,7 @@ function TodoForm({onSubmit}){
     const [content, setContent] = useState('');
     const [dateDebut, setDateDebut] = useState('');
     const [dateFin, setDateFin] = useState('');
-    const [selectedListId, setSelectedListId] = useState('listes');
+    const [selectedListId, setSelectedListId] = useState('');
     const [lists, setLists] = useState([]);
 
     const user = JSON.parse(localStorage.getItem('user'));
@@ -19,9 +19,6 @@ function TodoForm({onSubmit}){
         const response = await listService.getListUser(user.documentId);
         setLists(response.data.data);
         
-        if (response.data.data.length > 0) {
-          setSelectedListId(response.data.data[0].documentId);
-        }
       } catch (error) {
         console.error('Erreur chargement listes:', error);
       }
