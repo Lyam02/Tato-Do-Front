@@ -8,7 +8,7 @@ function Navbar({lists}) {
     <div className="sidebar p-4 d-flex flex-column ">
 
       <div className="logo mb-4 d-flex">
-        <Link to="/">
+        <Link to="/home">
             <img src={logo} className='logo-img'/>
         </Link>
         <span className="ms-1">TATO-DO</span>

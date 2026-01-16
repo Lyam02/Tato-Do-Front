@@ -9,11 +9,16 @@ const api = axios.create({
     },
 });
 
+const user = JSON.parse(localStorage.getItem('user'));
+ console.log('2. User PARSÉ:', user);
+    console.log('3. User documentId:', user.documentId);
+    console.log('4. User id:', user.id);
+
 export const todoService = {
     getAll: () => api.get('/todos'),
     getOne: (id) => api.get(`/todos/${id}`),
-    create: (todoData) => api.post('/todos', {data: todoData}),
-    update: (id, todoData) => api.put(`/todos/${id}`, {data: todoData}),
+    create: (todoData) => api.post('/todos', {data: {...todoData, user: user.documentId}}),
+    update: (id, todoData) => api.put(`/todos/${id}`, {data: {...todoData, user: user.documentId}}),
     delete: (id) => api.delete(`/todos/${id}`),
     getTodoFromList: (id) => api.get(`/todos?filters[list][documentId][$eq]=${id}`)
 };
