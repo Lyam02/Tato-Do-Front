@@ -13,7 +13,8 @@ function Connexion() {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
-    const handleConnexion = async () => {
+    const handleConnexion = async (e) => {
+        e.preventDefault()
         try {
             const data = await userService.login(email, mdp);
 
@@ -88,7 +89,11 @@ function Connexion() {
                                     placeholder="mail.exemple@mail.com"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    onKeyDown={handleConnexion}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            handleConnexion(e);
+                                        }
+                                    }}
                                     style={{ backgroundColor: 'transparent', borderColor: '#6c757d', borderRadius: '5px' }}
                                 />
                             </div>
@@ -100,7 +105,11 @@ function Connexion() {
                                     placeholder="Mot de passe"
                                     value={mdp}
                                     onChange={(e) => setMdp(e.target.value)}
-                                    onKeyDown={handleConnexion}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            handleConnexion(e);
+                                        }
+                                    }}
                                     style={{ backgroundColor: 'transparent', borderColor: '#6c757d', borderRight: 'none' }}
                                 />
 
