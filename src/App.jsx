@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Connexion from './pages/Connexion.jsx'
 import Lists from './components/lists/Lists';
 import CreateLists from './components/lists/CreateLists.jsx';
-
+import SecureRoute from './components/SecureRoute';
 
 
 
@@ -15,25 +15,32 @@ function App() {
     <Routes>
 
             <Route path='/' element={
-                <Connexion/>
+                <SecureRoute type={"public"}>
+                    <Connexion/>
+                </SecureRoute>
             }/>
             <Route path='/home' element={
-                <Layout>
-                    <Home/>
-                </Layout>
+                <SecureRoute>
+                    <Layout>
+                        <Home/>
+                    </Layout>
+                </SecureRoute>
             }/>
 
             <Route path='/lists/:id' element={
-              <Layout>
-                <Lists/>
-              </Layout>
-            
+                <SecureRoute>
+                  <Layout>
+                    <Lists/>
+                  </Layout>
+                </SecureRoute>
             }/>
 
             <Route path='/newlist' element={
-              <Layout>
-                <CreateLists/>
-              </Layout>
+              <SecureRoute>
+                    <Layout>
+                    <CreateLists/>
+                  </Layout>
+              </SecureRoute>
             }/>
 
         </Routes>

@@ -1,8 +1,17 @@
 import './Navbar.css'
 import {Link} from 'react-router-dom';
 import logo from "../../assets/logo.png";
+import { useNavigate } from 'react-router-dom';
 
 function Navbar({lists}) {
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('jwt');
+        localStorage.removeItem('user');
+        navigate('/');
+    };
 
   return (
     <div className="sidebar p-4 d-flex flex-column ">
@@ -67,7 +76,7 @@ function Navbar({lists}) {
           <i className="bi bi-gear me-2"></i> Settings
         </button>
         
-        <button className="btn btn-link text-danger text-decoration-none d-flex align-items-center">
+        <button onClick={handleLogout} className="btn btn-link text-danger text-decoration-none d-flex align-items-center">
           <i className="bi bi-box-arrow-right me-2"></i> Déconnexion
         </button>
       </div>

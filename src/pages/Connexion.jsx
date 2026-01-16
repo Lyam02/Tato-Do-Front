@@ -18,10 +18,11 @@ function Connexion() {
         try {
             const data = await userService.login(email, mdp);
 
-            localStorage.setItem('token', data.jwt);
-            localStorage.setItem('user', JSON.stringify(data.user));
-
-            navigate('/home');
+            if (data.jwt) {
+                localStorage.setItem('jwt', data.jwt);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                navigate('/home');
+            }
 
         } catch (error) {
             setShowError(true);
