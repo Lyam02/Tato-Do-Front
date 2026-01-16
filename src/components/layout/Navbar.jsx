@@ -55,9 +55,11 @@ function Navbar({lists}) {
         </Link>
         ))}
         
-        <button className="btn btn-link text-white text-decoration-none mt-2">
-          <i className="bi bi-plus-circle me-2"></i> Nouvelle liste
-        </button>
+        <Link to={'/newlist'} className="text-decoratiob-none">
+          <button className="btn btn-link text-white text-decoration-none mt-2">
+            <i className="bi bi-plus-circle me-2"></i> Nouvelle liste
+          </button>
+        </Link>
       </div>
 
       <div className="sidebar-footer">

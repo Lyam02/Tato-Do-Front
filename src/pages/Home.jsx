@@ -6,10 +6,11 @@ import TodoItem from '../components/todos/TodoItem';
 function Home(){
 
     const [todos, setTodos] = useState([]);
+    const user = JSON.parse(localStorage.getItem('user'));
     
     useEffect(() => {
         const fetchTodos = async () => {
-        const response = await todoService.getAll();
+        const response = await todoService.getTodoUser(user.documentId);
         setTodos(response.data.data);
     };
     fetchTodos();

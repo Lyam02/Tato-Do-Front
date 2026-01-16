@@ -10,25 +10,24 @@ const api = axios.create({
 });
 
 const user = JSON.parse(localStorage.getItem('user'));
- console.log('2. User PARSÉ:', user);
-    console.log('3. User documentId:', user.documentId);
-    console.log('4. User id:', user.id);
 
 export const todoService = {
     getAll: () => api.get('/todos'),
     getOne: (id) => api.get(`/todos/${id}`),
-    create: (todoData) => api.post('/todos', {data: {...todoData, user: user.documentId}}),
+    create: (todoData) => api.post('/todos', {data: {...todoData, user: user.documentId, list: todoData.list}}),
     update: (id, todoData) => api.put(`/todos/${id}`, {data: {...todoData, user: user.documentId}}),
     delete: (id) => api.delete(`/todos/${id}`),
-    getTodoFromList: (id) => api.get(`/todos?filters[list][documentId][$eq]=${id}`)
+    getTodoFromList: (id) => api.get(`/todos?filters[list][documentId][$eq]=${id}`),
+    getTodoUser: (id) => api.get(`/todos?filters[user][documentId][$eq]=${id}`)
 };
 
 export const listService ={
     getAll: () => api.get('/lists'),
     getOne: (id) => api.get(`/lists/${id}`),
-    create: (listData) => api.post('/lists', {data: listData}),
+    create: (listData) => api.post('/lists', {data: {...listData, users: user.documentId}}),
     update: (id, listData) => api.put(`/lists/${id}`, {data: listData}),
-    delete: (id) => api.delete(`/lists/${id}`)
+    delete: (id) => api.delete(`/lists/${id}`),
+    getListUser: (id) => api.get(`/lists?filters[users][documentId][$eq]=${id}`)
 };
 
 export const userService ={

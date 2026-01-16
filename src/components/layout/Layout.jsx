@@ -5,10 +5,13 @@ import { listService } from "../../services/api";
 function Layout({children}){
 
     const [lists, setLists] = useState([]);
+
+    const user = JSON.parse(localStorage.getItem('user'));
+
     
     useEffect(() => {
         const fetchLists = async () => {
-        const response = await listService.getAll();
+        const response = await listService.getListUser(user.documentId);
         setLists(response.data.data);
     };
     fetchLists();
