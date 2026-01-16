@@ -26,14 +26,14 @@ export const listService ={
     delete: (id) => api.delete(`/lists/${id}`)
 };
 
-export const employeService ={
+export const userService ={
     login: async (email, password) => {
         const response = await api.post('/auth/local', {
             identifier: email,
             password: password
         });
         return response.data;
-    }
+    },
 }
 
 export default api;

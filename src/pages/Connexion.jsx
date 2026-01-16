@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import logo from "../assets/logo.png";
 import { useNavigate} from "react-router-dom";
-import {employeService} from '../services/api'
+import {userService} from '../services/api'
 
 
 function Connexion() {
@@ -9,14 +9,13 @@ function Connexion() {
     {/* Partie Fonction*/}
     const [email, setEmail] = useState("");
     const [mdp, setMdp] = useState("");
+    const [showError, setShowError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleConnexion = async () => {
         try {
-            const data = await employeService.login(email, mdp);
-
-            console.log("Utilisateur connecté :", data.user);
-            console.log("Token JWT :", data.jwt);
+            const data = await userService.login(email, mdp);
 
             localStorage.setItem('token', data.jwt);
             localStorage.setItem('user', JSON.stringify(data.user));
@@ -24,13 +23,34 @@ function Connexion() {
             navigate('/home');
 
         } catch (error) {
-            alert("Email ou mot de passe incorrect.");
+            setShowError(true);
+            setTimeout(() => setShowError(false), 3000);
         }
     };
 
 
     {/* Partie Front*/}
     return (
+
+        <>
+            <div
+                className="alert alert-danger position-fixed top-0 end-0 m-3 shadow d-flex align-items-center"
+                role="alert"
+                style={{
+                    zIndex: 1050,
+                    minWidth: '300px',
+                    transition: 'all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)',
+                    opacity: showError ? 1 : 0,
+                    transform: showError ? 'translateY(0)' : 'translateY(-100%)',
+                    pointerEvents: showError ? 'auto' : 'none'
+                }}
+            >
+                <i className="bi bi-exclamation-triangle-fill me-3 fs-4"></i>
+                <div>
+                    <strong>Erreur de connexion</strong>
+                    <div className="small">Email ou mot de passe incorrect.</div>
+                </div>
+            </div>
         <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center"
              style={{ backgroundColor: '#E6F0F4' }}>
 
@@ -60,7 +80,6 @@ function Connexion() {
 
                     <div className="col-md-6 p-4 p-md-5">
                         <h3 className="fw-bold text-center mb-5 text-dark">Connexion</h3>
-
                         <form>
                             <div className="mb-4">
                                 <input
@@ -69,22 +88,31 @@ function Connexion() {
                                     placeholder="mail.exemple@mail.com"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    onKeyDown={handleConnexion}
                                     style={{ backgroundColor: 'transparent', borderColor: '#6c757d', borderRadius: '5px' }}
                                 />
                             </div>
 
                             <div className="input-group mb-5">
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     className="form-control p-2"
                                     placeholder="Mot de passe"
                                     value={mdp}
-                                    onChange={(e) => setMdp(e.target.value)} // Mise à jour de l'état
+                                    onChange={(e) => setMdp(e.target.value)}
+                                    onKeyDown={handleConnexion}
                                     style={{ backgroundColor: 'transparent', borderColor: '#6c757d', borderRight: 'none' }}
                                 />
-                                <span className="input-group-text bg-transparent"
-                                      style={{borderColor: '#6c757d', cursor: 'pointer'}}>
-                                        <i className="bi bi-eye"></i>
+
+                                <span
+                                    className="input-group-text bg-transparent"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    style={{ borderColor: '#6c757d', cursor: 'pointer' }}
+                                >
+                                    <i
+                                        className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`}
+                                        style={{ color: '#6c757d' }}
+                                    ></i>
                                 </span>
                             </div>
                             <button
@@ -101,10 +129,10 @@ function Connexion() {
                             </button>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
+        </>
     );
 }
 
