@@ -2,6 +2,7 @@ import './Navbar.css'
 import {Link} from 'react-router-dom';
 import logo from "../../assets/logo.png";
 import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function Navbar({lists}) {
 
@@ -17,9 +18,9 @@ function Navbar({lists}) {
     <div className="sidebar p-4 d-flex flex-column ">
 
       <div className="logo mb-4 d-flex">
-        <Link to="/home">
+        <NavLink to="/home">
             <img src={logo} className='logo-img'/>
-        </Link>
+        </NavLink>
         <span className="ms-1">TATO-DO</span>
       </div>
 
@@ -29,40 +30,68 @@ function Navbar({lists}) {
       
       <div className="mb-4">
         <h6 className="text-uppercase text-white-50 small mb-3">Tâches</h6>
+
+          <NavLink
+              to="/home"
+              className="list-item btn btn-outline-light w-100 d-flex align-items-center justify-content-between"
+              style={({ isActive }) => {
+                  return {
+                      backgroundColor: isActive ? '#DFDFDF' : '#E9F8F8',
+                      borderColor: isActive ? '#495057' : '',
+                      color: isActive ? '#000000' : '#000000'
+                  };
+              }}
+          >
+              <span><i className="bi bi-chevron-double-right me-2"></i> À Faire</span>
+              <span className="badge bg-dark text-white rounded-pill">15+</span>
+          </NavLink>
         
-        <button className="list-item btn btn-outline-light w-100 d-flex align-items-center justify-content-between active">
-          <span><i className="bi bi-chevron-double-right me-2"></i> À Faire</span>
-          <span className="badge bg-dark text-white rounded-pill">15+</span>
-        </button>
-        
-        <button className="list-item btn btn-outline-light w-100 d-flex align-items-center justify-content-between active">
+        <NavLink to="/home" className="list-item btn btn-outline-light w-100 d-flex align-items-center justify-content-between active">
           <span><i className="bi bi-list-ul me-2"></i> Aujourd'hui</span>
           <span className="badge bg-dark rounded-pill">8</span>
-        </button>
+        </NavLink>
         
-        <button className="list-item btn btn-outline-light w-100 d-flex align-items-center justify-content-between active">
+        <NavLink to="/home" className="list-item btn btn-outline-light w-100 d-flex align-items-center justify-content-between active">
           <span><i className="bi bi-calendar3 me-2"></i> Calendrier</span>
-        </button>
+        </NavLink>
       </div>
 
       <div className="mb-4">
         <h6 className="text-uppercase text-white-50 small mb-3">Listes</h6>
-        
-        {lists.map(list => (
-          <Link key={list.documentId} to={`/lists/${list.documentId}`} className="text-decoration-none">
-          <div className="list-item">
-          <div className="d-flex align-items-center">
-            <span className="list-dot" style={{backgroundColor: list.color}}></span>
-            <span>{list.name}</span>
-          </div>
-          {list.isPublic ? (
-            <i className="bi bi-people"></i>
-          ) : (
-            <i className="bi bi-lock"></i>
-          )}
-        </div>
-        </Link>
-        ))}
+
+          {lists.map(list => (
+              <NavLink
+                  key={list.documentId}
+                  to={`/lists/${list.documentId}`}
+
+                  // 1. J'ai déplacé 'list-item' ICI sur le NavLink
+                  // J'ai ajouté 'd-flex' etc. pour remplacer la div qui servait de conteneur
+                  className="list-item text-decoration-none d-flex justify-content-between align-items-center"
+
+                  style={({ isActive }) => {
+                      return {
+                          // Le style s'applique maintenant directement sur l'élément visible
+                          backgroundColor: isActive ? '#DFDFDF' : '#E9F8F8',
+                          borderColor: isActive ? '#495057' : 'transparent', // 'transparent' est mieux que '' vide
+                          color: '#000000',
+                          cursor: 'pointer'
+                      };
+                  }}
+              >
+                  {/* 2. J'ai supprimé la <div className="list-item"> qui englobait tout ici */}
+
+                  <div className="d-flex align-items-center">
+                      <span className="list-dot" style={{backgroundColor: list.color}}></span>
+                      <span className="ms-2">{list.name}</span> {/* Ajout de marge ms-2 pour espacer du point */}
+                  </div>
+
+                  {list.isPublic ? (
+                      <i className="bi bi-people"></i>
+                  ) : (
+                      <i className="bi bi-lock"></i>
+                  )}
+              </NavLink>
+          ))}
         
         <Link to={'/newlist'} className="text-decoratiob-none">
           <button className="btn btn-link text-white text-decoration-none mt-2">
