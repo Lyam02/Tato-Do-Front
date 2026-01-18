@@ -18,17 +18,17 @@ function Layout({children}){
     }, []);
 
     return (
-        <div className="container-fluid p-0">
-            <div className="row g-0 min-vh-100">
-
-                <div className="col-auto">
+        <div className="container-fluid p-0 vh-100 overflow-hidden">
+            <div className="row g-0 h-100">
+                <div className="col-auto h-100 bg-dark">
                     <Navbar lists={lists} />
                 </div>
 
-                <div className="col p-4 ms-5 mt-5">
-                    <main>{children}</main>
+                <div className="col h-100 overflow-y-auto p-4 custom-scrollbar">
+                    <div className="col p-4 ms-5 mt-5">
+                        <main>{children}</main>
+                    </div>
                 </div>
-
             </div>
         </div>
     );
