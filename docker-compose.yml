@@ -1,0 +1,14 @@
+services:
+  tatodo:
+    image: lyam02/tato-do:dev
+    restart: always
+    container_name: DEV-TatoDo
+    ports:
+      - 5173:5173
+    networks:
+      - tatodonetwork
+
+networks:
+  tatodonetwork:
+    external: true
+    name: tato-do
