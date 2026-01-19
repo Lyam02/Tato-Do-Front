@@ -6,10 +6,11 @@ import TodoItem from '../components/todos/TodoItem';
 function Home(){
 
     const [todos, setTodos] = useState([]);
+    const user = JSON.parse(localStorage.getItem('user'));
     
     useEffect(() => {
         const fetchTodos = async () => {
-        const response = await todoService.getAll();
+        const response = await todoService.getTodoUser(user.documentId);
         setTodos(response.data.data);
     };
     fetchTodos();
@@ -28,9 +29,7 @@ function Home(){
 
     const handleDelete = async (id) => {
         try{
-            const response = await todoService.delete(id);
-            console.log("Réponse Strapi:", response);
-            // console.log("Status:", response.status);
+            await todoService.delete(id);
 
             setTodos(todos.filter(todo => todo.documentId !== id));
         }catch(error){
