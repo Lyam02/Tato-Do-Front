@@ -35,7 +35,8 @@ function TodoForm({onSubmit}){
         content: content,
         dateDebut: dateDebut,
         dateFin: dateFin,
-        list: selectedListId
+        list: selectedListId,
+        finish: false
         });
 
         setContent('');

@@ -10,7 +10,7 @@ function Home(){
     
     useEffect(() => {
         const fetchTodos = async () => {
-        const response = await todoService.getTodoUser(user.documentId);
+        const response = await todoService.getTodoUserNotCompleted(user.documentId);
         setTodos(response.data.data);
     };
     fetchTodos();
@@ -37,24 +37,33 @@ function Home(){
         }
     }
 
-    const date = new Date();
+    const completeTask = async (id, todoData) => {
+        try{
+            await todoService.update(id, todoData);
 
-    const dateFormatee = date.toLocaleDateString('fr-FR', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    });
+            setTodos(todos.filter(todo => todo.documentId !== id));
+        }catch(error){
+            console.error("Erreur de suppression : ", error);
+        }
+    }
+
+    // const date = new Date();
+
+    // const dateFormatee = date.toLocaleDateString('fr-FR', {
+    //     weekday: 'long',
+    //     day: 'numeric',
+    //     month: 'long',
+    //     year: 'numeric'
+    // });
 
     return (
     <div className="">
         <div className="d-flex align-items-center gap-2">
-            <h1 className="mb-0">Aujourd'hui</h1>
-            <h5 className="mb-0">{dateFormatee}</h5>
+            <h1 className="mb-0">Tâches à faire</h1>
         </div>
         
         <TodoForm onSubmit={handleCreate} />
-        <TodoItem todos={todos} onDelete={handleDelete}/>
+        <TodoItem todos={todos} onDelete={handleDelete} completeTask={completeTask}/>
 
     </div>
     );

@@ -1,6 +1,6 @@
 import TodoList from "./TodoList";
 
-function TodoItem({todos, onDelete}){
+function TodoItem({todos, onDelete, completeTask}){
 
     return(
         <>
@@ -9,7 +9,8 @@ function TodoItem({todos, onDelete}){
             {todos.map(todo => (
                 <TodoList key={todo.id}
                         todo={todo}
-                        onDelete={onDelete}/>
+                        onDelete={onDelete}
+                        completeTask={completeTask}/>
             ))}
         </div>
         </>

@@ -20,6 +20,23 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.todo-item {
+    transition: opacity 0.5s ease;
+}
+
+.todo-item.fading {
+    opacity: 0;
+}
+
+.delete-list-btn {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.d-flex:hover .delete-list-btn {
+    opacity: 1;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
