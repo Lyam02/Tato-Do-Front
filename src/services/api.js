@@ -28,7 +28,7 @@ export const listService ={
     create: (listData) => api.post('/lists', {data: {...listData, users: user.documentId}}),
     update: (id, listData) => api.put(`/lists/${id}`, {data: listData}),
     delete: (id) => api.delete(`/lists/${id}`),
-    getListUser: (id) => api.get(`/lists?filters[users][documentId][$eq]=${id}`)
+    getListUser: (id) => api.get(`/lists?filters[$or][0][users][documentId][$eq]=${id}&filters[$or][1][isPublic][$eq]=true`)
 };
 
 export const userService ={
