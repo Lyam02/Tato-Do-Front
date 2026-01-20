@@ -47,14 +47,14 @@ function Home(){
         }
     }
 
-    const date = new Date();
+    // const date = new Date();
 
-    const dateFormatee = date.toLocaleDateString('fr-FR', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    });
+    // const dateFormatee = date.toLocaleDateString('fr-FR', {
+    //     weekday: 'long',
+    //     day: 'numeric',
+    //     month: 'long',
+    //     year: 'numeric'
+    // });
 
     return (
     <div className="">
