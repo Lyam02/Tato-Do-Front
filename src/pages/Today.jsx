@@ -11,7 +11,7 @@ function Today() {
     useEffect(() => {
         const fetchTodos = async () => {
             try {
-                const response = await todoService.getTodoUser(user.documentId);
+                const response = await todoService.getTodoUserNotCompleted(user.documentId);
                 setTodos(response.data.data);
             } catch (err) {
                 console.error("Erreur fetch:", err);

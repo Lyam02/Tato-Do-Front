@@ -7,6 +7,9 @@ function Lists(){
     const {id} = useParams();
     const [list, setList] = useState(null);
     const [todos, setTodos] = useState([])
+    const [isCompleted, setIsCompleted] = useState(false);
+    const [isFading, setIsFading] = useState(false);
+
 
     useEffect(() => {
 
@@ -40,9 +43,33 @@ function Lists(){
         }
     }
 
+    const completeTask = async (id, todoData) => {
+        try{
+            await todoService.update(id, todoData);
+
+            setTodos(todos.filter(todo => todo.documentId !== id));
+        }catch(error){
+            console.error("Erreur de suppression : ", error);
+        }
+    }
+
+    const completeTodo = (todoid) => (e) => {
+    const isChecked = e.target.checked;
+    setIsCompleted(isChecked);
+    
+    if (isChecked) {
+        setIsFading(true);
+        
+        setTimeout(() => {
+            completeTask(todoid, {finish: true});
+        }, 500);
+    }
+}
+
+
     if (!list) {
     return <div>Chargement...</div>;
-  }
+    }
 
     return(
 
@@ -58,12 +85,13 @@ function Lists(){
             <div className="todos-list">
                 {todos.map((todo) => (
                 <div key={todo.documentId} className="card mb-2">
-                    <div className="row align-items-center">
+                    <div className={`row align-items-center todo-item ${isFading ? 'fading' : ''}`}>
                         <div className="col">
                             <div className="d-flex align-items-center">
                                 <input 
+                                    onChange={completeTodo(todo.documentId)}
                                     type="checkbox" 
-                                    checked={todo.finish}
+                                    checked={isCompleted}
                                     className="form-check-input border border-1 border-secondary me-3"/>
                                 
                                 <div>

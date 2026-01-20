@@ -15,9 +15,10 @@ export const todoService = {
     getAll: () => api.get('/todos'),
     getOne: (id) => api.get(`/todos/${id}`),
     create: (todoData) => api.post('/todos', {data: {...todoData, user: user.documentId, list: todoData.list}}),
-    update: (id, todoData) => api.put(`/todos/${id}`, {data: {...todoData, user: user.documentId}}),
+    update: (id, todoData) => api.put(`/todos/${id}`, {data: {...todoData}}),
     delete: (id) => api.delete(`/todos/${id}`),
-    getTodoFromList: (id) => api.get(`/todos?filters[list][documentId][$eq]=${id}`),
+    getTodoFromList: (id) => api.get(`/todos?filters[list][documentId][$eq]=${id}&filters[finish][$eq]=false`),
+    getTodoUserNotCompleted: (id) => api.get(`/todos?filters[user][documentId][$eq]=${id}&filters[finish][$eq]=false`),
     getTodoUser: (id) => api.get(`/todos?filters[user][documentId][$eq]=${id}`)
 };
 
