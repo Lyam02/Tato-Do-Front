@@ -76,7 +76,7 @@ function Navbar({lists}) {
           {lists.map(list => (
               <NavLink
                   key={list.documentId}
-                  to={`/lists/${list.documentId}`}
+                  to={`/ParentList/${list.documentId}`}
                   className="list-item text-decoration-none d-flex justify-content-between align-items-center"
 
                   style={({ isActive }) => {
