@@ -9,7 +9,7 @@ const api = axios.create({
     },
 });
 
-const user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(sessionStorage.getItem('user'));
 
 export const todoService = {
     getAll: () => api.get('/todos'),

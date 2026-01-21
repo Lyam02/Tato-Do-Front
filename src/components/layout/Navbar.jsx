@@ -9,8 +9,8 @@ function Navbar({lists}) {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem('jwt');
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('jwt');
+        sessionStorage.removeItem('user');
         navigate('/');
     };
 
