@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 const SecureRoute = ({ children, type = "protected" }) => {
-    const jwt = localStorage.getItem('jwt');
+    const jwt = sessionStorage.getItem('jwt');
 
     if (type === "protected" && !jwt) {
         return <Navigate to="/" replace />;

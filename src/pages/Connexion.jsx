@@ -19,8 +19,8 @@ function Connexion() {
             const data = await userService.login(email, mdp);
 
             if (data.jwt) {
-                localStorage.setItem('jwt', data.jwt);
-                localStorage.setItem('user', JSON.stringify(data.user));
+                sessionStorage.setItem('jwt', data.jwt);
+                sessionStorage.setItem('user', JSON.stringify(data.user));
                 navigate('/home');
             }
 

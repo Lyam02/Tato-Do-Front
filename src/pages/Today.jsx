@@ -6,12 +6,12 @@ import PlanningLayout from "../components/layout/PlanningLayout.jsx";
 
 function Today() {
     const [todos, setTodos] = useState([]);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(sessionStorage.getItem('user'));
 
     useEffect(() => {
         const fetchTodos = async () => {
             try {
-                const response = await todoService.getTodoUserNotCompleted(user.documentId);
+                const response = await todoService.getTodoUserNotCompletedOrListPublic(user.documentId);
                 setTodos(response.data.data);
             } catch (err) {
                 console.error("Erreur fetch:", err);
@@ -19,6 +19,16 @@ function Today() {
         };
         fetchTodos();
     }, [user.documentId]);
+    
+    const completeTask = async (id, todoData) => {
+        try{
+            await todoService.update(id, todoData);
+
+            setTodos(todos.filter(todo => todo.documentId !== id));
+        }catch(error){
+            console.error("Erreur de suppression : ", error);
+        }
+    }
 
     const handleCreate = async (todoData) => {
         try {
@@ -61,7 +71,7 @@ function Today() {
             </div>
 
             <TodoForm onSubmit={handleCreate} />
-            <TodoItem todos={todayTodos} onDelete={handleDelete}/>
+            <TodoItem todos={todayTodos} onDelete={handleDelete} completeTask={completeTask}/>
 
             <PlanningLayout todos={todos} onDelete={handleDelete} />
         </div>

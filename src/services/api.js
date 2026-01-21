@@ -9,7 +9,7 @@ const api = axios.create({
     },
 });
 
-const user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(sessionStorage.getItem('user'));
 
 export const todoService = {
     getAll: () => api.get('/todos'),
@@ -19,6 +19,7 @@ export const todoService = {
     delete: (id) => api.delete(`/todos/${id}`),
     getTodoFromList: (id) => api.get(`/todos?filters[list][documentId][$eq]=${id}&filters[finish][$eq]=false`),
     getTodoUserNotCompleted: (id) => api.get(`/todos?filters[user][documentId][$eq]=${id}&filters[finish][$eq]=false`),
+    getTodoUserNotCompletedOrListPublic: (id) => api.get(`/todos?filters[$or][0][user][documentId][$eq]=${id}&filters[finish][$eq]=false&filters[$or][1][list][isPublic][$eq]=true$filters[finish][$eq]=false`),
     getTodoUser: (id) => api.get(`/todos?filters[user][documentId][$eq]=${id}`)
 };
 

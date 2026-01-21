@@ -6,7 +6,7 @@ import TodoItem from '../components/todos/TodoItem';
 function Home(){
 
     const [todos, setTodos] = useState([]);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(sessionStorage.getItem('user'));
     
     useEffect(() => {
         const fetchTodos = async () => {

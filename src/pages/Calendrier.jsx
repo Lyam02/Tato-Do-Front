@@ -4,7 +4,7 @@ import PlanningLayout from "../components/layout/PlanningLayout.jsx";
 
 function Calendrier() {
     const [todos, setTodos] = useState([]);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(sessionStorage.getItem('user'));
 
     useEffect(() => {
         const fetchTodos = async () => {
