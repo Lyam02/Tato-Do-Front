@@ -1,9 +1,7 @@
 import { useState} from 'react';
-import { todoService } from '../../services/api';
 
-function Lists({completeTask, list, todo}){
+function Lists({completeTask, list, todo, deleteTask}){
 
-    const [todos, setTodos] = useState([])
     const [isCompleted, setIsCompleted] = useState(false);
     const [isFading, setIsFading] = useState(false);
 
@@ -27,13 +25,10 @@ function Lists({completeTask, list, todo}){
         }
     }
 
-    const deleteTodo = async (id) => {
-        try{
-            await todoService.delete(id);
+    const deleteTodo = () => {
+        if (window.confirm('Supprimer ?')){
 
-            setTodos(todos.filter(todo => todo.documentId !== id));
-        }catch(error){
-            console.error("Erreur de suppression : ", error);
+            deleteTask(todo.documentId)
         }
     }
 
@@ -64,7 +59,7 @@ function Lists({completeTask, list, todo}){
                     </div>
                     <div className="col-auto">
                         <button 
-                            onClick={() => deleteTodo(todo.documentId)}
+                            onClick={deleteTodo}
                             className="btn btn-sm"
                             aria-label="Supprimer">
                             <i className="bi bi-x-lg"></i>
@@ -77,5 +72,4 @@ function Lists({completeTask, list, todo}){
 
     );
 }
-
 export default Lists;

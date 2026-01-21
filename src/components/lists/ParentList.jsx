@@ -54,6 +54,16 @@ function ParentList(){
         }
     }
 
+    const deleteTask = async (id) => {
+        try{
+            await todoService.delete(id);
+
+            setTodos(todos.filter(todo => todo.documentId !== id));
+        }catch(error){
+            console.error("Erreur de suppression : ", error);
+        }
+    }
+
     if (!list) {
     return <div>Chargement...</div>;
     } 
@@ -73,7 +83,7 @@ function ParentList(){
             </div>
 
             {todos.map((todo) => (
-            <Lists todo={todo} completeTask={completeTask} list={list}/>
+            <Lists todo={todo} completeTask={completeTask} list={list} deleteTask={deleteTask}/>
             ))}
         </div>
 
