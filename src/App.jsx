@@ -8,6 +8,7 @@ import Connexion from './pages/Connexion.jsx'
 import Lists from './components/lists/Lists';
 import CreateLists from './components/lists/CreateLists.jsx';
 import SecureRoute from './components/SecureRoute';
+import ParentList from './components/lists/ParentList.jsx';
 
 
 function App() {
@@ -32,6 +33,14 @@ function App() {
                 <SecureRoute>
                   <Layout>
                     <Lists/>
+                  </Layout>
+                </SecureRoute>
+            }/>
+
+            <Route path='/ParentList/:id' element={
+                <SecureRoute>
+                  <Layout>
+                    <ParentList/>
                   </Layout>
                 </SecureRoute>
             }/>
