@@ -24,7 +24,7 @@ function CreateLists (){
         setName('');
         setIsPublic(false);
 
-        navigate(`/lists/${response.data.data.documentId}`);
+        navigate(`/ParentList/${response.data.data.documentId}`);
 
         window.location.reload();
     }
