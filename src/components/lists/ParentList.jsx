@@ -70,21 +70,37 @@ function ParentList(){
 
     return(
 
-        <div className="container mt-4">
-            <div className="d-flex align-items-center mb-4">
-                <span className="list-dot me-2" style={{backgroundColor: list.color}}></span>
-                <h1 className="mb-0">{list.name}</h1>
+        <div className="container mt-1">
+            <div className="d-flex align-items-center justify-content-center mb-4 position-relative">
+                <div className="d-flex align-items-center mb-2">
+                    <span className="list-dot me-2" style={{backgroundColor: list.color}}></span>
+                    <h1 className="mb-0">{list.name}</h1>
+                </div>
                 <button 
                     onClick={deleteList}
-                    className="btn btn-link text-danger ms-3 p-0 delete-list-btn"
+                    className="btn btn-link text-danger p-0 delete-list-btn position-absolute end-0"
                     aria-label="Supprimer la liste">
                     <i className="bi bi-trash" style={{fontSize: '1rem'}}></i>
                 </button>
             </div>
 
-            {todos.map((todo) => (
-            <Lists todo={todo} completeTask={completeTask} list={list} deleteTask={deleteTask}/>
-            ))}
+            <div className="mb-4">
+                <h5 className="text-muted mb-3">
+                    <i className="bi bi-circle me-2"></i>À faire
+                </h5>
+                {todos.filter(todo => todo.finish == false).map((todo) => (
+                    <Lists key={todo.documentId} todo={todo} completeTask={completeTask} list={list} deleteTask={deleteTask}/>
+                ))}
+            </div>
+
+            <div className="mb-4">
+                <h5 className="text-muted mb-3">
+                    <i className="bi bi-check-circle me-2"></i>Fait
+                </h5>
+                {todos.filter(todo => todo.finish == true).map((todo) => (
+                    <Lists key={todo.documentId} todo={todo} completeTask={completeTask} list={list} deleteTask={deleteTask}/>
+                ))}
+            </div>
         </div>
 
     );

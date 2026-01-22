@@ -17,7 +17,7 @@ export const todoService = {
     create: (todoData) => api.post('/todos', {data: {...todoData, user: user.documentId, list: todoData.list}}),
     update: (id, todoData) => api.put(`/todos/${id}`, {data: {...todoData}}),
     delete: (id) => api.delete(`/todos/${id}`),
-    getTodoFromList: (id) => api.get(`/todos?filters[list][documentId][$eq]=${id}&filters[finish][$eq]=false`),
+    getTodoFromList: (id) => api.get(`/todos?filters[list][documentId][$eq]=${id}`),
     getTodoUserNotCompleted: (id) => api.get(`/todos?filters[user][documentId][$eq]=${id}&filters[finish][$eq]=false`),
     getTodoUserNotCompletedOrListPublic: (id) => api.get(`/todos?filters[$or][0][user][documentId][$eq]=${id}&filters[finish][$eq]=false&filters[$or][1][list][isPublic][$eq]=true$filters[finish][$eq]=false`),
     getTodoUser: (id) => api.get(`/todos?filters[user][documentId][$eq]=${id}`)

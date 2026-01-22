@@ -47,20 +47,23 @@ return(
                     checked={isCompleted}
                     className="form-check-input border border-1 border-secondary me-3"/>
                 
-                <div>
-                    <p className="mb-0">{todo.content}</p>
-                    <p className="text-muted mb-0">
-                        {formatDate(todo.dateDebut)} - {formatDate(todo.dateFin)}
-                    </p>
-                </div>
+                <div className="flex-grow-1">
+                        <span className="d-block mb-1">{todo.content}</span>
+                        <div className="d-flex align-items-center gap-2">
+                            <span className="badge bg-primary bg-opacity-10 text-primary">
+                                <i className="bi bi-calendar-event me-1"></i>{formatDate(todo.dateDebut)}
+                            </span>
+                            <i className="bi bi-arrow-right text-muted"></i>
+                            <span className="badge bg-success bg-opacity-10 text-success">
+                                <i className="bi bi-calendar-check me-1"></i>{formatDate(todo.dateFin)}
+                            </span>
+                        </div>
+                    </div>
             </div>
         </div>
         <div className="col-auto">
             <button 
-                onClick={deleteTodo}
-                className="btn btn-sm"
-                aria-label="Supprimer">
-                <i className="bi bi-x-lg"></i>
+                onClick={deleteTodo} className="btn btn-sm btn-outline-danger flex-shrink-0" aria-label="Supprimer"> <i className="bi bi-trash"></i>
             </button>
         </div>
     </div>
